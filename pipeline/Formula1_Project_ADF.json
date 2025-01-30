@@ -1,0 +1,124 @@
+{
+	"name": "Formula1_Project_ADF",
+	"properties": {
+		"activities": [
+			{
+				"name": "If Condition1",
+				"type": "IfCondition",
+				"dependsOn": [],
+				"userProperties": [],
+				"typeProperties": {
+					"expression": {
+						"value": "@or(equals(pipeline().parameters.p_ingestion_method, 'incremental_load'), equals(pipeline().parameters.p_ingestion_method, 'delta'))",
+						"type": "Expression"
+					},
+					"ifFalseActivities": [
+						{
+							"name": "Notebook1_copy1",
+							"type": "DatabricksNotebook",
+							"dependsOn": [],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/sudheer.r@3ktechnologies.com/Formula1-Project/automation_code",
+								"baseParameters": {
+									"ingestion_method": {
+										"value": "@pipeline().parameters.p_ingestion_method",
+										"type": "Expression"
+									},
+									"file_date": {
+										"value": "\"\"",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "Databrciks_formula1",
+								"type": "LinkedServiceReference"
+							}
+						}
+					],
+					"ifTrueActivities": [
+						{
+							"name": "Set variable1",
+							"type": "SetVariable",
+							"dependsOn": [],
+							"policy": {
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"variableName": "p_file_date",
+								"value": {
+									"value": "@not(equals(pipeline().parameters.p_file_date, ''))\n",
+									"type": "Expression"
+								}
+							}
+						},
+						{
+							"name": "Notebook1",
+							"type": "DatabricksNotebook",
+							"dependsOn": [
+								{
+									"activity": "Set variable1",
+									"dependencyConditions": [
+										"Succeeded"
+									]
+								}
+							],
+							"policy": {
+								"timeout": "0.12:00:00",
+								"retry": 0,
+								"retryIntervalInSeconds": 30,
+								"secureOutput": false,
+								"secureInput": false
+							},
+							"userProperties": [],
+							"typeProperties": {
+								"notebookPath": "/Users/sudheer.r@3ktechnologies.com/Formula1-Project/automation_code",
+								"baseParameters": {
+									"ingestion_method": {
+										"value": "@pipeline().parameters.p_ingestion_method",
+										"type": "Expression"
+									},
+									"file_date": {
+										"value": "@pipeline().parameters.p_file_date",
+										"type": "Expression"
+									}
+								}
+							},
+							"linkedServiceName": {
+								"referenceName": "Databrciks_formula1",
+								"type": "LinkedServiceReference"
+							}
+						}
+					]
+				}
+			}
+		],
+		"parameters": {
+			"p_ingestion_method": {
+				"type": "string",
+				"defaultValue": "pyspark"
+			},
+			"p_file_date": {
+				"type": "string"
+			}
+		},
+		"variables": {
+			"p_file_date": {
+				"type": "Boolean"
+			}
+		},
+		"annotations": [],
+		"lastPublishTime": "2025-01-28T17:53:20Z"
+	},
+	"type": "Microsoft.DataFactory/factories/pipelines"
+}

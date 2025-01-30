@@ -1,0 +1,14 @@
+{
+	"name": "Databrciks_formula1",
+	"type": "Microsoft.DataFactory/factories/linkedservices",
+	"properties": {
+		"annotations": [],
+		"type": "AzureDatabricks",
+		"typeProperties": {
+			"domain": "https://adb-4099793249715749.9.azuredatabricks.net",
+			"authentication": "MSI",
+			"workspaceResourceId": "/subscriptions/68d710d1-b14c-403a-a223-1c06f59f3439/resourceGroups/sudheerrgdb/providers/Microsoft.Databricks/workspaces/sudheer7834",
+			"existingClusterId": "0108-044114-qvj7kx0j"
+		}
+	}
+}

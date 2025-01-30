@@ -1,0 +1,9 @@
+{
+	"name": "sudhidf",
+	"location": "centralus",
+	"identity": {
+		"type": "SystemAssigned",
+		"principalId": "b623e32e-531b-4be0-81b3-abb8dc96efb8",
+		"tenantId": "818467cf-44b9-45a5-a41a-1ef924fcd795"
+	}
+}
